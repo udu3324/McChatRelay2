@@ -1,0 +1,43 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'application'
+    id 'java-library'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+group 'com.udu3324'
+version '1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
+}
+
+dependencies {
+    implementation 'net.dv8tion:JDA:4.3.0_277'
+}
+
+application {
+    mainClass.set('com.udu3324.DiscordBot.MainBot')
+}
+
+task testJar(type: Jar) {
+    manifest {
+        attributes 'Description': 'McChatRelay2 Java Application.'
+    }
+}
+
+// Run task shadowJar to make a runnable Fat/Uber jar
+shadowJar {
+    manifest {
+        inheritFrom project.tasks.testJar.manifest
+    }
+}
